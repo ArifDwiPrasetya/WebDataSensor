@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sensor</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            getData()
+        })
+
+        function getData() {
+            $.ajax({
+                type : "GET",
+                url : "/data",
+                data : {},
+                success : function(response){
+                    let listData = response.dataList
+                    console.log(listData[0])
+                    for(i=0 ; i<listData.length; i++){
+                        dataSensor = listData[i]['nilai_sensor']
+
+                        let temp_html= `<h2>${dataSensor}</h2>`
+
+                        $('#nilaiSensor').append(temp_html)
+                    }
+                }
+            })
+        }
+
+        function postData() {
+            let nilaiSensor = '56'
+
+            $.ajax({
+                type : "POST",
+                url : "/data",
+                data : {'SensorData' : nilaiSensor},
+                success : function(response){
+                    console.log(response)
+                    window.location.reload()
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Halo Dunia</h1>
+    <div id="nilaiSensor"></div>
+    <button onclick="postData()" id="data">Data Percobaan</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
