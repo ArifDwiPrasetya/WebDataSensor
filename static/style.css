@@ -1,0 +1,333 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(249,251,250);
+    padding: 0;
+    margin: 0;
+    
+}
+.status{
+    width: 10%;
+    margin: auto;
+    color: green;
+    background-color: white;
+    border: 0.2em solid green;
+    border-radius: 1em;
+    font-size: 0.9em;
+    text-align: center;
+    font-weight: bold;
+}
+.header{
+    width: 80%;
+    background-color : #00ED64 ;
+    text-align: right;
+    font-size : 2.5em;
+    font-weight: bold;
+    border-right: 0.5em solid rgb(0,30,43);
+    border-top: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-style: double;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    padding:0.3em 0.5em 0.3em 0.3em;
+
+}
+
+main{
+    margin: 0;
+    padding: 0;
+}
+.container-fluid{
+    margin: 15% 0 0 0;
+    padding: 0;
+
+}
+.row{
+    width: 100%;
+    margin: 0;
+    padding: 1em;
+}
+
+#nilai-update{
+    width: 100%;
+    background-color: #E3FCF7;
+    display: flex;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#label-update{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #023430;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    margin-right: 1em;
+}
+
+#update-waktu{
+    width: 60%;
+    text-align: center;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    border: 0.1em solid black;
+}
+
+#nilai-suhu{
+    background-color: rgb(0,104,74);
+    display: flex;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#label-suhu{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #023430;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    margin-right: 1em;
+}
+
+#suhu{
+    width: 60%;
+    text-align: center;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    border: 0.1em solid black;
+}
+
+
+#nilai-udara{
+    background-color: rgb(0,104,74);
+    display: flex;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#label-udara{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #023430;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    margin-right: 1em;
+}
+
+#kel-udara{
+    width: 25%;
+    text-align: center;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    border: 0.1em solid black;
+}
+
+#data-tanah{
+    background-color: aliceblue;
+}
+
+#nilai-tanah{
+    border-radius: 1em;
+    padding: 1em;
+    background-color: #3A4D39;
+}
+
+#label-tanah{
+    text-align: center;
+    font-weight: bold;
+    color: rgb(0,0,0);
+    background-color: rgb(107,176,1);
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border: 0.5em solid #3A4D39;
+    border-style: ridge;
+    /* border-radius: 1em; */
+}
+
+#kel-tanah{
+    text-align: center;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    /* border-radius: 1em; */
+    border: 0.5em solid #3A4D39;
+    border-radius: 1em;
+}
+
+#row-siram{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aliceblue;
+}
+
+#nilai-siram{
+    background-color: #E3FCF7;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#label-siram{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: rgb(0,30,43);
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+}
+
+#waktu-siram{
+    text-align: center;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+    border-radius: 1em;
+    border: 0.1em solid black;
+    margin-top: 1.5em;
+}
+
+.bks-button{
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1em;
+}
+
+button{
+    background-color: #00ED64;
+    color: #023430;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: bold;
+    border-radius: 10px;
+
+}
+
+footer{
+    padding: 1em;
+    text-align: center;
+    background-color: #061621;
+    color: #e7e1e1;
+}
+
+
+@media screen and (min-width: 992px) {
+    .header{
+        text-align: center;
+    }
+    
+    .container-fluid{
+        margin: 8% 0 0 0;
+    }
+
+    #nilai-update{
+        width: 50%;
+        margin: auto;
+    }
+
+    #nilai-suhu, #nilai-udara, #nilai-tanah, #nilai-siram {
+        width: 50%;
+        margin: auto;
+    }
+
+  }
+
+  @media screen and (max-width: 576px) {
+    .status{
+        width: 15%;
+    }
+    .header{
+        font-size: 1.5em;
+    }
+    .container-fluid{
+        margin: 14% 0 0 0;
+    }
+    .row{
+        padding: 0.5em;
+    }
+    #label-update{
+        width: 100%;
+    }
+
+    #nilai-suhu{
+        border-radius: 2em;
+        display: block;
+        padding:0 0.5em 0.2em 0.5em ;
+    }
+    
+    #nilai-udara{
+        border-radius: 2em;
+        display: block;
+        padding:0 0.5em 0.2em 0.5em ;
+    }
+    
+    #label-suhu, #label-udara,#label-tanah{
+        text-align: center;
+        font-size: 1.2em;
+        margin: auto;
+    }
+    #suhu{
+        border: 0.5em solid #023430;
+        width: fit-content;
+        font-size: 1.5em;
+        font-weight: bolder ;
+        padding: 1em 0.5em 1em 0.5em;
+        border-radius: 50%;
+        margin: 0.5em auto;
+    }
+    #kel-udara{
+        border: 0.5em solid #023430;
+        width: fit-content;
+        font-size: 1.5em;
+        font-weight: bolder ;
+        padding: 1em 0.8em 1em 0.8em;
+        border-radius: 50%;
+        margin: 0.5em auto;
+    }
+
+    #data-tanah{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #nilai-tanah{
+        width: 70%;
+        margin: auto;
+    }
+
+    #kel-tanah{
+        font-size: 1.5em;
+        font-weight: bolder;
+    }
+
+    #label-siram{
+        text-align: center;
+        border-radius: 0;
+    }
+    #waktu-siram{
+        font-size: 1.2em;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    #data-tanah{
+        padding: 0;
+    }
+    .bks-button{
+        margin: 0;
+        padding: 0;
+    }
+    
+  }
+  

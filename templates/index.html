@@ -2,58 +2,175 @@
 <html lang="en">
 
 <head>
+    <meta property="og:title" content="Monitoring Tanaman" />
+    <meta property="og:description" content="Website monitoring tanaman yang dikembangkan oleh mahasiswa TRK Politeknik Negeri Samarinda" />
+    <meta property="og:image" content="{{url_for('static', filename='ogTanaman.jpg')}}" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='leaf.png')}}" type="image/x-icon" />
+    <link rel="icon" href="{{url_for('static', filename='leaf.png')}}" type="image/x-icon" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Sensor</title>
+    <title>Monitoring Tanaman</title>
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="../static/style.css">
 
     <script>
         $(document).ready(function () {
-            getData()
+            status_perangkat()
+            getSensor()
+            waktuPenyiraman()
+            setInterval(status_perangkat, 1000)
+            setInterval(getSensor, 1000)
         })
-
-        function getData() {
+        function status_perangkat() {
             $.ajax({
-                type : "GET",
-                url : "/data",
-                data : {},
-                success : function(response){
-                    let listData = response.dataList
-                    console.log(listData[0])
-                    for(i=0 ; i<listData.length; i++){
-                        dataSensor = listData[i]['nilai_sensor']
+                type: "GET",
+                url: "/getstatus_perangkat",
+                data: {},
+                success: function (response) {
+                    console.log(response.status_perangkat)
+                    if (response.status_perangkat == 'Online') {
+                        $('.status').css({ "color": "Green", "border": "0.2em solid Green" })
+                        $('.status').text('Online')
+                    } else {
+                        $('.status').css({ "color": "Red", "border": "0.2em solid Red" })
+                        $('.status').text('Offline')
 
-                        let temp_html= `<h2>${dataSensor}</h2>`
-
-                        $('#nilaiSensor').append(temp_html)
                     }
                 }
             })
         }
 
-        function postData() {
-            let nilaiSensor = '56'
-
+        function getSensor() {
             $.ajax({
-                type : "POST",
-                url : "/data",
-                data : {'SensorData' : nilaiSensor},
-                success : function(response){
+                type: "GET",
+                url: "/dataSensor",
+                data: {},
+                success: function (response) {
+
                     console.log(response)
-                    window.location.reload()
+                    let dataSensor = response.latestData
+                    let suhu = dataSensor.suhu
+                    let kel_udara = dataSensor.kelembaban_udara
+                    let kel_tanah = dataSensor.kelembaban_tanah
+                    let dataWaktu = dataSensor.waktu
+                    let waktu = dataWaktu.split('-')[3] + ' : ' + dataWaktu.split('-')[4] + ' : ' + dataWaktu.split('-')[5]
+
+                    $('#update-waktu').text(waktu)
+                    $('#suhu').text(suhu)
+                    $('#kel-udara').text(kel_udara)
+                    $('#kel-tanah').text(kel_tanah)
                 }
             })
         }
+
+        function waktuPenyiraman() {
+            $.ajax({
+                type: "GET",
+                url: "/penyiraman",
+                data: {},
+                success: function (response) {
+                    let datawaktu = response.waktu_penyiraman
+                    let splitData = datawaktu.waktu_penyiraman.split('-')
+                    let waktuSiram = splitData[2] + '/' + splitData[1] + '/' + splitData[0] + ' | ' + splitData[3] + ':' + splitData[4] + ':' + splitData[5]
+                    $('#waktu-siram').text(waktuSiram)
+                }
+            })
+        }
+
+        function siram() {
+            if ($('.status').text() == 'Online') {
+                let message;
+                $.ajax({
+                    type: 'POST',
+                    url: '/penyiraman',
+                    data: { status_siram: 'True' },
+                    success: function (response) {
+                        if (response.status_siram == 'Berhasil') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Permintaan Berhasil Dikirim',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            waktuPenyiraman();
+                        }
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Perangkat Sedang Offline',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        }
+
     </script>
 </head>
 
 <body>
-    <h1>Halo Dunia</h1>
-    <div id="nilaiSensor"></div>
-    <button onclick="postData()" id="data">Data Percobaan</button>
+    <header class="fixed-top">
+        <section class="status">Online</section>
+        <section class="header"><span>Monitoring Tanaman</span></section>
+    </header>
+    <main>
+        <section class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div id="nilai-update">
+                        <div id="label-update">Update Data Pada :</div>
+                        <div id="update-waktu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="nilai-suhu">
+                        <div id="label-suhu">Temperature</div>
+                        <div id="suhu"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="nilai-udara">
+                        <div id="label-udara">Humidity</div>
+                        <div id="kel-udara"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="data-tanah">
+                <div class="col">
+                    <div id="nilai-tanah">
+                        <div id="label-tanah">Soil Moisture</div>
+                        <div id="kel-tanah"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="nilai-siram">
+                        <div id="label-siram">Penyiraman Terakhir Pada :</div>
+                        <div id="waktu-siram"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="row-siram">
+                <div class="col">
+                    <div class="bks-button">
+                        <button onclick="siram()" id="data">Siram Tanaman</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        Develope by Mahasiswa TRK 5C | Angktan 21
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
